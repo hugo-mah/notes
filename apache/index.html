@@ -3,23 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
-      <link rel="shortcut icon" href="img/favicon.ico" />
-    <title>Notes</title>
-    <link rel="stylesheet" href="css/theme.css" />
-    <link rel="stylesheet" href="css/theme_extra.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Configurer apache - Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Welcome to my notes.";
-        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_name = "Configurer apache";
+        var mkdocs_page_input_path = "apache.md";
         var mkdocs_page_url = null;
       </script>
     
-    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
-      <script src="js/html5shiv.min.js"></script>
+      <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script> 
@@ -31,9 +31,9 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href="." class="icon icon-home"> Notes
+          <a href=".." class="icon icon-home"> Notes
         </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -42,32 +42,34 @@
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Ansible</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="ansible/">Installer</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../ansible/">Installer</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="ansible_commands/">Commandes et playbook</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../ansible_commands/">Commandes et playbook</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Python</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="pip_venv/">Créer un environnement virtuel</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../pip_venv/">Créer un environnement virtuel</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RHEL</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="commandes_rhel/">Commandes à connaitre</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="firewall/">Firewall</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="root_password/">Réinitialiser mot de passe root</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="create_lvm/">Créer et resize un LVM</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="shell-expansion/">Regex</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="apache/">Configurer apache</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Configurer apache</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
       </div>
@@ -77,14 +79,15 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href=".">Notes</a>
+          <a href="..">Notes</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-      <li>Welcome to my notes.</li>
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Apache &raquo;</li>
+      <li>Configurer apache</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -93,10 +96,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="welcome-to-my-notes">Welcome to my notes.</h1>
+                <h1 id="installer-apache">Installer apache</h1>
+<p><code>dnf install httpd</code></p>
+<h1 id="configuration-apache">Configuration apache</h1>
+<p>Fichier de conf: /ect/httpd/conf/httpd.conf</p>
+<p>La ligne <code>documentroot</code> montre l'endroit où apache va chercher son fichier index.html</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../shell-expansion/" class="btn btn-neutral float-left" title="Regex"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
 
   <hr/>
 
@@ -118,13 +128,15 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
+      <span><a href="../shell-expansion/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
     
   </span>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="js/theme_extra.js" defer></script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);
@@ -133,8 +145,3 @@
 
 </body>
 </html>
-
-<!--
-MkDocs version : 1.4.2
-Build Date UTC : 2022-12-15 13:55:17.061987+00:00
--->
