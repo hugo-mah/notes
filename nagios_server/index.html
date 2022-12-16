@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Configurer apache - Notes</title>
+    <title>Serveur - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Configurer apache";
-        var mkdocs_page_input_path = "apache.md";
+        var mkdocs_page_name = "Serveur";
+        var mkdocs_page_input_path = "nagios_server.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -64,12 +64,35 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ssh_keys/">Création de clés privées</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../apache/">Configurer apache</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nagios</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Configurer apache</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Serveur</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installer-python3">Installer python3</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installer-apache">Installer apache</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation-nagios">Installation nagios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#repository-codeready-builder-rhel">Repository codeready-builder RHEL</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#repository-epel">Repository EPEL</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configurer-nagios">Configurer nagios</a>
+    </li>
+        </ul>
+    </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nagios_ncpa/">Client ncpa</a>
                   </li>
               </ul>
       </div>
@@ -86,8 +109,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Apache &raquo;</li>
-      <li>Configurer apache</li>
+          <li>Nagios &raquo;</li>
+      <li>Serveur</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -96,16 +119,29 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="installer-apache">Installer apache</h1>
-<p><code>dnf install httpd</code></p>
-<h1 id="configuration-apache">Configuration apache</h1>
-<p>Fichier de conf: /ect/httpd/conf/httpd.conf</p>
-<p>La ligne <code>documentroot</code> montre l'endroit où apache va chercher son fichier index.html</p>
+                <h1 id="installer-nagios-core">Installer Nagios Core</h1>
+<h2 id="installer-python3">Installer python3</h2>
+<p><code>dnf install python3</code></p>
+<h2 id="installer-apache">Installer apache</h2>
+<p>Voir Configurer apache</p>
+<p><code>firewall-cmd --add-port=80/tcp --permanent</code></p>
+<h2 id="installation-nagios">Installation nagios</h2>
+<h3 id="repository-codeready-builder-rhel">Repository codeready-builder RHEL</h3>
+<p><code>subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms</code></p>
+<h3 id="repository-epel">Repository EPEL</h3>
+<p><code>dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm</code></p>
+<h3 id="configurer-nagios">Configurer nagios</h3>
+<pre><code>dnf install nagios
+dnf install python3-passlib
+htpasswd -c /etc/nagios/htpasswd.users user
+</code></pre>
+<p>Remplacer les lignes AuthUserFile.* dans /etc/httpd/conf.d/nagios.conf par AuthUserFile /etc/nagios/htpasswd.users</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../shell-expansion/" class="btn btn-neutral float-left" title="Regex"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../apache/" class="btn btn-neutral float-left" title="Configurer apache"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../nagios_ncpa/" class="btn btn-neutral float-right" title="Client ncpa">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -128,8 +164,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../shell-expansion/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../apache/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../nagios_ncpa/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
