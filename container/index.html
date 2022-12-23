@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Serveur - Notes</title>
+    <title>Container - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Serveur";
-        var mkdocs_page_input_path = "nagios_server.md";
+        var mkdocs_page_name = "Container";
+        var mkdocs_page_input_path = "container.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -53,7 +53,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RHEL</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
@@ -66,6 +66,16 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ssh_keys/">Création de clés privées</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../crontab/">Crontab</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Container</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../swap/">swap</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
               <ul>
@@ -73,24 +83,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Nagios</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Serveur</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#installer-python3">Installer python3</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#installer-apache">Installer apache</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#installation-nagios">Installation nagios</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#repository-codeready-builder-rhel">Repository codeready-builder RHEL</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#repository-epel">Repository EPEL</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#configurer-nagios">Configurer nagios</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../nagios_server/">Serveur</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../nagios_ncpa/">Client ncpa</a>
                   </li>
@@ -114,8 +108,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Nagios &raquo;</li>
-      <li>Serveur</li>
+          <li>RHEL &raquo;</li>
+      <li>Container</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -124,29 +118,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="installer-nagios-core">Installer Nagios Core</h1>
-<h2 id="installer-python3">Installer python3</h2>
-<p><code>dnf install python3</code></p>
-<h2 id="installer-apache">Installer apache</h2>
-<p>Voir Configurer apache</p>
-<p><code>firewall-cmd --add-port=80/tcp --permanent</code></p>
-<h2 id="installation-nagios">Installation nagios</h2>
-<h3 id="repository-codeready-builder-rhel">Repository codeready-builder RHEL</h3>
-<p><code>subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms</code></p>
-<h3 id="repository-epel">Repository EPEL</h3>
-<p><code>dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm</code></p>
-<h3 id="configurer-nagios">Configurer nagios</h3>
-<pre><code>dnf install nagios
-dnf install python3-passlib
-htpasswd -c /etc/nagios/htpasswd.users user
+                <h1 id="installer-un-container">Installer un container</h1>
+<ol>
+<li><code>dnf install container-tools</code></li>
+<li><code>mkdir -p /home/user/.config/containers</code></li>
+<li><code>vim /home/user/.config/containers/registries.conf</code>:</li>
+</ol>
+<pre><code>unqualified-search-registries = ['registry.lab.example.com']
+
+[[registry]]
+location = &quot;registry.lab.example.com&quot;
+insecure = true
+blocked = false
 </code></pre>
-<p>Remplacer les lignes AuthUserFile.* dans /etc/httpd/conf.d/nagios.conf par AuthUserFile /etc/nagios/htpasswd.users</p>
+<ol>
+<li><code>podman login registry</code></li>
+<li><code>podman info</code>: permet de vérifier les registres de recherche</li>
+<li><code>podman search python-38</code></li>
+<li><code>podman pull registry.access.redhat.com/ubi8/python-38</code></li>
+<li><code>podman images</code></li>
+</ol>
+<h1 id="creer-un-container">Créer un container</h1>
+<ol>
+<li><code>podman build -t python36:1.0 .</code></li>
+<li><code>podman create --name python36 &lt;id&gt;</code></li>
+<li><code>podman start python36</code></li>
+</ol>
+<h2 id="commandes-podman">Commandes podman</h2>
+<ul>
+<li><code>podman-build</code>: créer un container avec un fichier container</li>
+<li><code>podman-run</code>: lancer une commande dans un nouveau container</li>
+<li><code>podman-images</code>: lister les images locales</li>
+<li><code>podman-ps</code>: afficher les infos d'un container</li>
+<li><code>podman-inspect</code>: affiche la configuration d'un container</li>
+<li><code>podman-pull</code>: télécharge une image</li>
+<li><code>podman-cp</code>: copie des fichiers entre le local et le container</li>
+<li><code>podman-exec</code>: executer une commande dans un container en service</li>
+<li><code>podman-rm</code>: retirer un ou plusieurs containers</li>
+<li><code>podman-rmi</code>: retirer une ou plusieurs images locales</li>
+<li><code>podman-search</code>: cherche une image</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../apache/" class="btn btn-neutral float-left" title="Configurer apache"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../nagios_ncpa/" class="btn btn-neutral float-right" title="Client ncpa">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../crontab/" class="btn btn-neutral float-left" title="Crontab"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../selinux/" class="btn btn-neutral float-right" title="SELinux">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -169,10 +186,10 @@ htpasswd -c /etc/nagios/htpasswd.users user
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../apache/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../crontab/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../nagios_ncpa/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../selinux/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

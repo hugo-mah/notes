@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Commandes et playbook - Notes</title>
+    <title>Crontab - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Commandes et playbook";
-        var mkdocs_page_input_path = "ansible_commands.md";
+        var mkdocs_page_name = "Crontab";
+        var mkdocs_page_input_path = "crontab.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -41,12 +41,10 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Ansible</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../ansible/">Installer</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Commandes et playbook</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../ansible_commands/">Commandes et playbook</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Python</span></p>
@@ -55,7 +53,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RHEL</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
@@ -67,6 +65,16 @@
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ssh_keys/">Création de clés privées</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Crontab</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../container/">Container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../swap/">swap</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
@@ -100,8 +108,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Ansible &raquo;</li>
-      <li>Commandes et playbook</li>
+          <li>RHEL &raquo;</li>
+      <li>Crontab</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -110,73 +118,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="commandes-adhoc">Commandes adhoc</h1>
-<pre><code>ansible -m ping host
-</code></pre>
-<p>-m permet d'appeler un module ansible</p>
-<p>-k permet de demander le mot de passe pour l'authentification</p>
-<p>-bK permet de demander les privilèges</p>
-<h1 id="commandes-playbook">Commandes playbook</h1>
-<h2 id="taches">Taches</h2>
-<pre><code>---
-- hosts: linux
-
-  tasks:
-  - name: add a group
-    group:
-      name: exemple
-      state: present
-</code></pre>
-<h2 id="vars">Vars</h2>
-<pre><code>vars:
-    collegue:
-    - titi
-    - tata
-    - toto
-</code></pre>
-<h2 id="handlers">Handlers</h2>
-<pre><code>- name: Add line to conf file
-    lineinfile:
-      path: /path
-      line: new line
-      state: present
-    delegate_to: hostname
-    notify: Restart service
-
-handlers:
-
-- name: Restart service
-    systemd:
-      name: service
-      state: restarted
-      enabled: yes
-</code></pre>
-<p>Un handlers est une tache à exécuter uniquement si elle est appelée en utilisant notify.</p>
-<h2 id="roles">Roles</h2>
-<p>Un rôle est une structure de fichier qui permet de séparer les éléments d'un playbook.</p>
-<p><code>ansible-galaxy role init name</code></p>
-<p>Permet de créer un role.</p>
-<ul>
-<li>tasks: permet de stocker les taches</li>
-<li>handler: stocke les handlers</li>
-<li>templates: template de texte</li>
-<li>files: fichier à fournir pour le playbook</li>
-<li>vars: variables qui ne sont pas amenées à changer</li>
-<li>default: variables utilisables en extra vars</li>
-</ul>
-<p>Pour lancer un role, on crée un playbook qui appelle ce role:</p>
-<pre><code>---
-- hosts: webservers
-  roles:
-    - common
-    - webservers
+                <h1 id="crontab">Crontab</h1>
+<p><code>crontab -e</code></p>
+<pre><code># Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
 </code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../ansible/" class="btn btn-neutral float-left" title="Installer"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../pip_venv/" class="btn btn-neutral float-right" title="Créer un environnement virtuel">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../ssh_keys/" class="btn btn-neutral float-left" title="Création de clés privées"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../container/" class="btn btn-neutral float-right" title="Container">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -199,10 +157,10 @@ handlers:
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../ansible/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../ssh_keys/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../pip_venv/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../container/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
