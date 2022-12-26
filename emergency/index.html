@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Client ncpa - Notes</title>
+    <title>Emergency mode - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Client ncpa";
-        var mkdocs_page_input_path = "nagios_ncpa.md";
+        var mkdocs_page_name = "Emergency mode";
+        var mkdocs_page_input_path = "emergency.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -53,12 +53,16 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RHEL</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Emergency mode</a>
+    <ul class="current">
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
@@ -72,7 +76,9 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../swap/">swap</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
@@ -81,12 +87,10 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Nagios</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../nagios_server/">Serveur</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Client ncpa</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../nagios_ncpa/">Client ncpa</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Git</span></p>
@@ -108,8 +112,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Nagios &raquo;</li>
-      <li>Client ncpa</li>
+          <li>RHEL &raquo;</li>
+      <li>Emergency mode</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -118,67 +122,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="installer-ncpa">Installer ncpa</h1>
-<pre><code>dnf install python3
-alternatives --set python /usr/bin/python3
-dnf install https://repo.nagios.com/nagios/8/nagios-repo-8-1.el8.noarch.rpm
-dnf install ncpa
-</code></pre>
-<p>Définir token dans /usr/local/ncpa/etc/ncpa.cfg</p>
-<pre><code>firewall-cmd --add-port:5693/tcp
-cd /usr/lib64/nagios/plugins
-wget https://raw.githubusercontent.com/NagiosEnterprises/ncpa/master/client/check_ncpa.py
-</code></pre>
-<p>Ajouter:</p>
-<pre><code>define command {
-    command_name    check_ncpa
-    command_line    $USER1$/check_ncpa.py -H $HOSTADDRESS$ $ARG1$
-}
-</code></pre>
-<p>dans /etc/nagios/objects/commands.cfg</p>
-<p>Créer:</p>
-<pre><code>define host {
-          host_name               hostname
-          address                 ipaddress
-          check_command           check_ncpa!-t 'token' -P 5693 -M system/agent_version
-          max_check_attempts      5
-          check_interval          5
-          retry_interval          1
-          check_period            24x7
-          contacts                nagiosadmin
-          notification_interval   60
-          notification_period     24x7
-          notifications_enabled   1
-          icon_image              ncpa.png
-          statusmap_image         ncpa.png
-          register                1
-        }
-
-        define service {
-            host_name               hostname
-            service_description     CPU Usage
-            check_command           check_ncpa!-t 'token' -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
-            max_check_attempts      5
-            check_interval          5
-            retry_interval          1
-            check_period            24x7
-            notification_interval   60
-            notification_period     24x7
-            contacts                nagiosadmin
-            register                1
-        }
-</code></pre>
-<p>dans /etc/nagios/ncpa_hostname.cfg</p>
-<p>Ajouter:</p>
-<pre><code>cfg_file=/etc/nagios/ncpa_hostname.cfg
-</code></pre>
-<p>dans /etc/nagios/nagios.cfg</p>
+                <h1 id="emergency-mode">Emergency mode</h1>
+<ol>
+<li>Dans grub, appuyer sur "e"</li>
+<li>Ajouter: <code>systemd.unit=emergency.target</code> (ou rescue.target)</li>
+</ol>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../nagios_server/" class="btn btn-neutral float-left" title="Serveur"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../git_commands/" class="btn btn-neutral float-right" title="Commandes git">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../root_password/" class="btn btn-neutral float-left" title="Réinitialiser mot de passe root"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../create_lvm/" class="btn btn-neutral float-right" title="Créer et resize un LVM">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -201,10 +155,10 @@ wget https://raw.githubusercontent.com/NagiosEnterprises/ncpa/master/client/chec
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../nagios_server/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../root_password/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../git_commands/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../create_lvm/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

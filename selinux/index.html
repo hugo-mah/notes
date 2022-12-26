@@ -60,6 +60,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../emergency/">Emergency mode</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
@@ -74,7 +76,9 @@
     <ul class="current">
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../swap/">swap</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
@@ -125,12 +129,17 @@
 <p><code>getsebool</code></p>
 <p><code>setsebool</code></p>
 <p><code>sealert -a /var/log/audit/audit.log</code> liste les incidents selinux </p>
+<h1 id="selinux-avec-firewall">SELinux avec firewall</h1>
+<p>SELinux attribut à certains services l'utilisation de ports autorisés (EX: ssh 22/tcp)</p>
+<p><code>semanage port -l</code></p>
+<p>Pour modifier le context d'un port:
+<code>semanage port -a -t port_label -p tcp|udp PORTNUMBER</code></p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../container/" class="btn btn-neutral float-left" title="Container"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../swap/" class="btn btn-neutral float-right" title="swap">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../swap/" class="btn btn-neutral float-right" title="Swap">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
