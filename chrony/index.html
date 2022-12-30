@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Regex - Notes</title>
+    <title>Chrony - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Regex";
-        var mkdocs_page_input_path = "shell-expansion.md";
+        var mkdocs_page_name = "Chrony";
+        var mkdocs_page_input_path = "chrony.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -56,6 +56,8 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
@@ -64,9 +66,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Regex</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ssh_keys/">Création de clés privées</a>
                   </li>
@@ -79,6 +79,10 @@
                   <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Chrony</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
@@ -113,7 +117,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>RHEL &raquo;</li>
-      <li>Regex</li>
+      <li>Chrony</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -122,26 +126,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="regex">Regex</h1>
-<ul>
-<li>"?" : remplace 1 lettre</li>
-<li>"*" : 0 ou plusieurs lettres</li>
-<li>[abc]: un caractère parmi a, b ou c</li>
-<li>[!abc]: un caractère saus a, b ou c</li>
-<li>[[:alpha:]]: une lettre</li>
-<li>[[:lower:]]: une lettre minuscule</li>
-<li>[[:upper:]]: une lettre majuscule</li>
-<li>[[:digit:]]: un chiffre</li>
-<li>^: début de ligne</li>
-<li>$: fin de ligne</li>
-<li>touch hugo{0..9}: crée un fichier hugo0, hugo1, ..., hugo9</li>
-</ul>
+                <h1 id="chrony">Chrony</h1>
+<p><code>timedatectl</code>: gérer la config
+chronyd: daemon
+<code>chronyc sourves -v</code> config ntp</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../create_lvm/" class="btn btn-neutral float-left" title="Créer et resize un LVM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../ssh_keys/" class="btn btn-neutral float-right" title="Création de clés privées">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../nfs/" class="btn btn-neutral float-left" title="NFS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../apache/" class="btn btn-neutral float-right" title="Configurer apache">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -164,10 +158,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../create_lvm/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../nfs/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../ssh_keys/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../apache/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
