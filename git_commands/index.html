@@ -99,6 +99,38 @@
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Commandes git</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#commandes-git">Commandes Git</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installer-git">Installer git</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configurer-git">Configurer Git</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#new-project">New project</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#existing-project">Existing project</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#join-existing-project">Join existing project</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#recuperer-un-repo">Recupérer un repo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#deposer-sur-un-repo">Déposer sur un repo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#annuler-lajout-dun-fichier">Annuler l'ajout d'un fichier</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#annuler-les-modifications-dun-fichier">Annuler les modifications d'un fichier</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#creer-un-alias">Créer un alias</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ignorer-des-fichiers">Ignorer des fichiers</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#merging">Merging</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stash-vers-une-nouvelle-branche">Stash vers une nouvelle branche</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#git-tag">Git tag</a>
+    </li>
     </ul>
                   </li>
               </ul>
@@ -126,26 +158,71 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="commandes-git">Commandes Git</h1>
+                <h1 id="git">Git</h1>
+<h2 id="commandes-git">Commandes Git</h2>
 <ul>
 <li><code>git init name</code>: initialiser git</li>
 <li><code>git clone url</code>: télécharge un projet</li>
-<li><code>git status</code>: liste les nouveaux fichiers</li>
-<li><code>git diff</code>: montre les modifs de fichier</li>
+<li><code>git status</code>: liste l'état de git et des nouveux fichiers'</li>
+<li><code>git diff</code>: montre les modifs de fichier entre le unstage et le stage area</li>
 <li><code>git add</code>: ajoute à git</li>
-<li><code>git commit -m ""</code>: commiter </li>
+<li><code>git commit -am ""</code>: commiter </li>
 <li><code>git branch</code>: liste les branches locales</li>
 <li><code>git branch nom</code>: créer une branche</li>
 <li><code>git checkout nom</code>: change de branche</li>
+<li><code>git checkout -b nom</code>: crée une branche et switch dessus</li>
 <li><code>git merge nom</code>: fusionne la branche avec celle actuelle</li>
 <li><code>git branch -d</code>: supprime la branche</li>
 <li><code>git rm</code>: supprime le fichier</li>
 <li><code>git mv</code>: renomme le fichier</li>
-<li><code>git log</code>: montre l'historique des versions</li>
+<li><code>git log</code>: montre l'historique des commits</li>
 <li><code>git reset commit</code>: annule les commits après commit</li>
 <li><code>git fetch</code>: recupere l'historique du dépot</li>
 <li><code>git push</code>: envoie les commits</li>
+<li><code>git config --global user.name "username"</code></li>
+<li><code>git config --global user.email "email"</code></li>
+<li><code>git config --global --list</code>: voir les infos</li>
+<li><code>git clone 'url'</code></li>
+<li><code>git rebase</code>: permet de mettre à jour une branche par rapport à une autre</li>
+<li><code>git stash</code>: permet de sauvegarder un projet sans le commiter et retravailler dessus quand on veut</li>
+<li><code>git tag -a</code>: annoter un commit avec un tag (Ex: V1.1)</li>
 </ul>
+<h2 id="installer-git">Installer git</h2>
+<p><a href="https://git-scm.com">https://git-scm.com</a></p>
+<h2 id="configurer-git">Configurer Git</h2>
+<h3 id="new-project">New project</h3>
+<ol>
+<li><code>git init new project</code></li>
+<li><code>git add file</code></li>
+</ol>
+<h3 id="existing-project">Existing project</h3>
+<ol>
+<li><code>git init</code></li>
+<li><code>git add .</code></li>
+</ol>
+<h3 id="join-existing-project">Join existing project</h3>
+<ol>
+<li><code>git clone 'url'</code></li>
+</ol>
+<h2 id="recuperer-un-repo">Recupérer un repo</h2>
+<p><code>git pull origin master</code></p>
+<h2 id="deposer-sur-un-repo">Déposer sur un repo</h2>
+<p><code>git push origin master</code></p>
+<h2 id="annuler-lajout-dun-fichier">Annuler l'ajout d'un fichier</h2>
+<p><code>git reset HEAD file</code></p>
+<h2 id="annuler-les-modifications-dun-fichier">Annuler les modifications d'un fichier</h2>
+<p><code>git checkout -- file</code></p>
+<h2 id="creer-un-alias">Créer un alias</h2>
+<p><code>git config --global alias.name "command</code></p>
+<h2 id="ignorer-des-fichiers">Ignorer des fichiers</h2>
+<p>Créer un fichier .gitignore et écrire le nom des fichiers à ignorer</p>
+<h2 id="merging">Merging</h2>
+<p>Il faut être sur la branche vers laquelle on veut fusionner. Préciser --no-ff pour éviter le fast forward (merge qui merge tous les commits de la branche).</p>
+<h2 id="stash-vers-une-nouvelle-branche">Stash vers une nouvelle branche</h2>
+<p><code>git stash branch name</code></p>
+<p>Permet de prendre les modifications dans une branche et de les envoyer vers une autre.</p>
+<h2 id="git-tag">Git tag</h2>
+<p>Permet de donner un tag à des commits en particulier</p>
               
             </div>
           </div><footer>
