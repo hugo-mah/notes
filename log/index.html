@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Créer et resize un LVM - Notes</title>
+    <title>Log - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Cr\u00e9er et resize un LVM";
-        var mkdocs_page_input_path = "create_lvm.md";
+        var mkdocs_page_name = "Log";
+        var mkdocs_page_input_path = "log.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -64,9 +64,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../emergency/">Emergency mode</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Créer et resize un LVM</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
@@ -83,6 +81,14 @@
                   <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Log</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#rsyslog">Rsyslog</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#logrotate">Logrotate</a>
+    </li>
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
@@ -117,7 +123,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>RHEL &raquo;</li>
-      <li>Créer et resize un LVM</li>
+      <li>Log</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -126,25 +132,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="creer-un-lvm">Créer un LVM</h1>
-<pre><code>pvcreate /dev/sdb
-vgcreate vgdata /dev/sdb
-lvcreate: -n lvdata -L 15G vgdata
-mkfs -t ext4 /dev/vgdata/lvdata
+                <h1 id="how-to-configure-log">How to configure log</h1>
+<h2 id="rsyslog">Rsyslog</h2>
+<p><code>/etc/rsyslog.d/*.conf</code>
+<code>/etc/rsyslog.conf</code></p>
+<p>Utiliser local0 à local7 pour des logs personnalisés</p>
+<p><code>logger -p facility.level message</code></p>
+<p>Facility:</p>
+<p>Priority level:</p>
+<ol>
+<li>debug</li>
+<li>info</li>
+<li>notice</li>
+<li>warning, warn (same as warning)</li>
+<li>err, error (same as err)</li>
+<li>crit</li>
+<li>alert</li>
+<li>emerg, panic (same as emerg)</li>
+</ol>
+<p><code>/var/log</code> dossier de logs</p>
+<h2 id="logrotate">Logrotate</h2>
+<p>Conf de logrotate dans /etc/logrotate.d/*:</p>
+<pre><code>/var/log/http_check {
+    daily
+    compress
+    dateext
+    rotate 30
+    missingok
+}
 </code></pre>
-<p>Edit fstab pour qu'il se monte automatiquement où on veut</p>
-<h1 id="resize-lvm">Resize LVM</h1>
-<pre><code>umount /dev/vgdata/lvdata
-e2fsck /dev/vgdata/lvdata
-lvreduce -r -L size /dev/vgdata/lvdata
-</code></pre>
-<p>ATTENTION: le FS ne doit pas être utilisé.</p>
+<p><code>logrotate -f /etc/logrotate.d/*</code> force le logrotate</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../emergency/" class="btn btn-neutral float-left" title="Emergency mode"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../shell-expansion/" class="btn btn-neutral float-right" title="Regex">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../chrony/" class="btn btn-neutral float-left" title="Chrony"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../apache/" class="btn btn-neutral float-right" title="Configurer apache">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -167,10 +190,10 @@ lvreduce -r -L size /dev/vgdata/lvdata
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../emergency/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../chrony/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../shell-expansion/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../apache/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
