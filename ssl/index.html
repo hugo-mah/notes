@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>SELinux - Notes</title>
+    <title>Fonctionnement - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "SELinux";
-        var mkdocs_page_input_path = "selinux.md";
+        var mkdocs_page_name = "Fonctionnement";
+        var mkdocs_page_input_path = "ssl.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -53,7 +53,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RHEL</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
@@ -74,9 +74,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../container/">Container</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">SELinux</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
                   </li>
@@ -85,6 +83,25 @@
                   <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SSL/TLS</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Fonctionnement</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#fonctionnement">Fonctionnement</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#http">HTTP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#https-sans-cles-asymetriques">HTTPS sans clés asymétriques</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#https-avec-cles-asymetriques-sans-ca">HTTPS avec clés asymétriques sans CA</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#https">HTTPS</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Apache</span></p>
@@ -118,8 +135,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>RHEL &raquo;</li>
-      <li>SELinux</li>
+          <li>SSL/TLS &raquo;</li>
+      <li>Fonctionnement</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -128,24 +145,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="selinux">SELinux</h1>
-<p><code>semanage fcontext</code> permet de gérer les contextes de fichier</p>
-<p>Exemple: <code>semanage fcontext -a -t httpd_sys_content_t '/virtual(/.*)?'</code></p>
-<p><code>restorecon</code> applique les modification au répertoire et à tous les fichiers à l'intérieur</p>
-<p><code>getsebool</code></p>
-<p><code>setsebool</code></p>
-<p><code>sealert -a /var/log/audit/audit.log</code> liste les incidents selinux </p>
-<h1 id="selinux-avec-firewall">SELinux avec firewall</h1>
-<p>SELinux attribut à certains services l'utilisation de ports autorisés (EX: ssh 22/tcp)</p>
-<p><code>semanage port -l</code></p>
-<p>Pour modifier le context d'un port:
-<code>semanage port -a -t port_label -p tcp|udp PORTNUMBER</code></p>
+                <h1 id="ssltls">SSL/TLS</h1>
+<p>Utilisé pour sécuriser les échanges en HTTPS.</p>
+<h2 id="fonctionnement">Fonctionnement</h2>
+<h3 id="http">HTTP</h3>
+<p>Les échanges entre le serveur et le client se font sans chiffrement et peuvent être interceptés et lus en clair.</p>
+<h3 id="https-sans-cles-asymetriques">HTTPS sans clés asymétriques</h3>
+<p>Le client et le serveur échangent des infos grâce à une clé symétrique. Ils la possédent tous les deux et cela leur permet de déchiffrer les échanges. Ils doivent se partager cette clé et si quelqu'un l'intercepte il pourra déchiffrer les messages.</p>
+<h3 id="https-avec-cles-asymetriques-sans-ca">HTTPS avec clés asymétriques sans CA</h3>
+<p>Le serveur possède une paire de clés rsa (privée et publique). Le serveur envoie au client sa clé publique afin qu'il puisse chiffrer les données qu'il transmet. Grâce à ça, le client envoie la clé de chiffrement symétrique chiffrée avec la clé publique, que le serveur va déchiffrer grâce à la clé privée. Ils possèdent donc chacun la clé symétrique sans l'avoir envoyée en clair. Mais si quelqu'un s'est fait passer pour le serveur et a envoyé ses propres clés à la place de celles du serveur, il pourra déchiffrer les messages.</p>
+<h3 id="https">HTTPS</h3>
+<ol>
+<li>Une authorité de certification possède une paire de clé rsa. La clée privée est sécurisée et personne ne la connait, et la clé publique est distribuée à tous les navigateurs, et sera considérée comme une clé vérifiée.</li>
+<li>Un serveur web veut certifier son identité. Il va créer une paire de clé rsa. Il va envoyer une requète à une CA avec des informations comme le nom de domaine, la clé publique du serveur et d'autres informations. Toutes ces informations vont être chiffrées grâce à un algorithme et le hash obtenu sera appelé empreinte du certificat. La CA va renvoyer ce certificat root en incluant l'empreinte, et va signer cette empreinte avec sa clé privée (elle sera donc chiffrée). On appelle ça la signature du certificat.</li>
+<li>Un client souhaite se connecter au serveur web. Il va envoyer un Hello au serveur.</li>
+<li>Le serveur répond en envoyant son certificat root contenant sa clé publique.</li>
+<li>Le serveur reçoit le certificat. Il va utiliser la clé publique du CA pour déchiffrer la signature du certificat pour obtenir l'empreinte. Il va ensuite chiffrer grâce à l'algorithme communiqué l'ensemble des informations du certificat pour obtenir l'empreinte à nouveau. Il va comparer les deux empreintes. Si elles sont identiques, l'identité du serveur est validée. Si elles sont différentes, cela veut dire que des informations ont été modifées dans le certificat ou alors que ce n'est pas un certificat valide, il refuse donc la connexion.</li>
+<li>Si la connexion est validée, alors il utilise la clé publique pour envoyer sa clé symétrique chiffrée au serveur qui pourra la déchiffrer grâce à sa clé privée. Ils peuvent alors initialiser la connexion sécurisée grâce à la clé symétrique.</li>
+</ol>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../container/" class="btn btn-neutral float-left" title="Container"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../swap/" class="btn btn-neutral float-right" title="Swap">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../log/" class="btn btn-neutral float-left" title="Log"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../apache/" class="btn btn-neutral float-right" title="Configurer apache">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -168,10 +191,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../container/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../log/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../swap/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../apache/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
