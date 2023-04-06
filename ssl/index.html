@@ -56,6 +56,8 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
@@ -63,8 +65,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../emergency/">Emergency mode</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
@@ -76,13 +76,27 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ssh/">SSH</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../priority/">Process priority</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../basic_storage/">Stockage basique</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../stratis/">Stratis</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">SSL/TLS</span></p>
@@ -174,12 +188,14 @@
 <li><code>openssl req -new -key mysite.key -out mysite.csr</code>: création d'une requête à partir d'une clé</li>
 <li><code>openssl req -x509 -newkey rsa:4096 -keyout mysite.key -out mysite.crt -days 365</code>: (x509=format certificat) créer un certificat autosigné</li>
 <li><code>openssl x509 -in mysite.crt -text -noout</code>: lire un certificat</li>
+<li><code>openssl x509 -req -in site.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out site.crt -extfile site.cnf -extensions req...</code>: signer une requete avec une CA</li>
 </ul>
+<p>Faire attention aux subject alternative name (obligatoire)</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../log/" class="btn btn-neutral float-left" title="Log"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../stratis/" class="btn btn-neutral float-left" title="Stratis"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../apache/" class="btn btn-neutral float-right" title="Configurer apache">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -203,7 +219,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../log/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../stratis/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../apache/" style="color: #fcfcfc">Next &raquo;</a></span>

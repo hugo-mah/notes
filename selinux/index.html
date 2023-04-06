@@ -56,6 +56,8 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
@@ -63,8 +65,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../emergency/">Emergency mode</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
@@ -78,13 +78,27 @@
     <ul class="current">
     </ul>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ssh/">SSH</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../priority/">Process priority</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../basic_storage/">Stockage basique</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../stratis/">Stratis</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">SSL/TLS</span></p>
@@ -134,12 +148,27 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="selinux">SELinux</h1>
-<p><code>semanage fcontext</code> permet de gérer les contextes de fichier</p>
+<p>ATTENTION: policycoreutils et policycoreutils-python-utils doivent être installés</p>
+<p>/etc/selinux/config: définir l'état de selinux</p>
+<p><code>getenforce</code> &amp; <code>setenforce</code> (ATTENTION: TEMPORAIRE)</p>
+<p><code>chcon</code>permet de modifier un context de manière temporaire, il disparaitra si on utilise restorecon</p>
+<p><code>semanage fcontext</code> permet de gérer les contextes de fichier:</p>
+<ul>
+<li>-l: list</li>
+<li>-a: add</li>
+<li>-d: delete</li>
+</ul>
 <p>Exemple: <code>semanage fcontext -a -t httpd_sys_content_t '/virtual(/.*)?'</code></p>
-<p><code>restorecon</code> applique les modification au répertoire et à tous les fichiers à l'intérieur</p>
+<p><code>restorecon /path</code> applique les modification au répertoire et à tous les fichiers à l'intérieur:</p>
+<ul>
+<li>-R, -r: recursive</li>
+<li>v: verbose</li>
+</ul>
 <p><code>getsebool</code></p>
 <p><code>setsebool</code></p>
+<p><code>semanage boolean</code></p>
 <p><code>sealert -a /var/log/audit/audit.log</code> liste les incidents selinux </p>
+<p><code>sealert -l id</code> analyser les alertes selinux</p>
 <h1 id="selinux-avec-firewall">SELinux avec firewall</h1>
 <p>SELinux attribut à certains services l'utilisation de ports autorisés (EX: ssh 22/tcp)</p>
 <p><code>semanage port -l</code></p>
@@ -150,7 +179,7 @@
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../container/" class="btn btn-neutral float-left" title="Container"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../swap/" class="btn btn-neutral float-right" title="Swap">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../chrony/" class="btn btn-neutral float-right" title="Chrony">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -176,7 +205,7 @@
       <span><a href="../container/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../swap/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../chrony/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

@@ -56,6 +56,8 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
@@ -63,8 +65,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../emergency/">Emergency mode</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
@@ -76,10 +76,6 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Log</a>
@@ -88,7 +84,27 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#logrotate">Logrotate</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#journalctl">Journalctl</a>
+    </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ssh/">SSH</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../priority/">Process priority</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../basic_storage/">Stockage basique</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../create_lvm/">Créer et resize un LVM</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../stratis/">Stratis</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">SSL/TLS</span></p>
@@ -167,12 +183,29 @@
 }
 </code></pre>
 <p><code>logrotate -f /etc/logrotate.d/*</code> force le logrotate</p>
+<h2 id="journalctl">Journalctl</h2>
+<p>Voir des logs</p>
+<p>Editer le fichier /etc/systemd/journald.conf:</p>
+<ul>
+<li>
+<p>persistent: Stores journals in the /var/log/journal directory, which persists across reboots. If the /var/log/journal directory does not exist, then the systemd-journald service creates it.</p>
+</li>
+<li>
+<p>volatile: Stores journals in the volatile /run/log/journal directory. As the /run file system is temporary and exists only in the runtime memory, the data in it, including system journals, does not persist across a reboot.</p>
+</li>
+<li>
+<p>auto: If the /var/log/journal directory exists, then the systemd-journald service uses persistent storage; otherwise it uses volatile storage. This action is the default if you do not set the Storage parameter.</p>
+</li>
+<li>
+<p>none: Do not use any storage. The system drops all logs, but you can still forward the logs.</p>
+</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../chrony/" class="btn btn-neutral float-left" title="Chrony"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../ssl/" class="btn btn-neutral float-right" title="Fonctionnement">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../ssh/" class="btn btn-neutral float-right" title="SSH">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -198,7 +231,7 @@
       <span><a href="../chrony/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../ssl/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../ssh/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

@@ -56,6 +56,8 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
@@ -63,10 +65,6 @@
                   <li class="toctree-l1"><a class="reference internal" href="../root_password/">Réinitialiser mot de passe root</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../emergency/">Emergency mode</a>
-                  </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Créer et resize un LVM</a>
-    <ul class="current">
-    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../shell-expansion/">Regex</a>
                   </li>
@@ -78,13 +76,29 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ssh/">SSH</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../priority/">Process priority</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../basic_storage/">Stockage basique</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../swap/">Swap</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../nfs/">NFS</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../chrony/">Chrony</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Créer et resize un LVM</a>
+    <ul class="current">
+    </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../log/">Log</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../stratis/">Stratis</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">SSL/TLS</span></p>
@@ -134,24 +148,59 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="creer-un-lvm">Créer un LVM</h1>
+<p><code>parted set lvm on</code>: à utiliser sur la partition où on souhaite faire du LVM</p>
+<p>Possibilité de le faire sur un disque entier sans partitionner</p>
 <pre><code>pvcreate /dev/sdb
 vgcreate vgdata /dev/sdb
 lvcreate: -n lvdata -L 15G vgdata
 mkfs -t ext4 /dev/vgdata/lvdata
 </code></pre>
 <p>Edit fstab pour qu'il se monte automatiquement où on veut</p>
+<h1 id="lvm-vdo">LVM VDO</h1>
+<p>Installer vdo et kmod-kvdo</p>
+<p><code>lvcreate --type vdo --name vdo-lv01 --size 5G vg01</code>: préciser le type</p>
+<h1 id="inspecter-lvm">Inspecter LVM</h1>
+<ul>
+<li><code>pvdisplay</code></li>
+<li><code>vgdisplay</code></li>
+<li><code>lvdisplay</code></li>
+</ul>
 <h1 id="resize-lvm">Resize LVM</h1>
 <pre><code>umount /dev/vgdata/lvdata
 e2fsck /dev/vgdata/lvdata
 lvreduce -r -L size /dev/vgdata/lvdata
 </code></pre>
 <p>ATTENTION: le FS ne doit pas être utilisé.</p>
+<ul>
+<li><code>vgextend</code></li>
+<li><code>lvextend</code> </li>
+</ul>
+<h2 id="xfs">XFS</h2>
+<ul>
+<li><code>xfs_growfs</code>: permet d'adapter la taille du FS au nouveau volume (XFS)</li>
+</ul>
+<h2 id="ext4">EXT4</h2>
+<p><code>resize2fs</code>: même chose pour ext4 </p>
+<h2 id="swap">SWAP</h2>
+<p>Ajouter du stockage au lv et reformater en swap avec mkswap</p>
+<h1 id="reduce-lvm">Reduce LVM</h1>
+<h2 id="reduce-vg">Reduce VG</h2>
+<p><code>pvmove</code>: retirer un PV</p>
+<ul>
+<li><code>vgreduce</code></li>
+</ul>
+<h2 id="remove">Remove</h2>
+<ul>
+<li><code>lvremove</code></li>
+<li><code>vgremove</code></li>
+<li><code>pvremove</code></li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../emergency/" class="btn btn-neutral float-left" title="Emergency mode"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../shell-expansion/" class="btn btn-neutral float-right" title="Regex">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../nfs/" class="btn btn-neutral float-left" title="NFS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../stratis/" class="btn btn-neutral float-right" title="Stratis">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -174,10 +223,10 @@ lvreduce -r -L size /dev/vgdata/lvdata
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../emergency/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../nfs/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../shell-expansion/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../stratis/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

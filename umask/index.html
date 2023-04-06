@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Installer - Notes</title>
+    <title>umask - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Installer";
-        var mkdocs_page_input_path = "ansible.md";
+        var mkdocs_page_name = "umask";
+        var mkdocs_page_input_path = "umask.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -41,10 +41,8 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Ansible</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Installer</a>
-    <ul class="current">
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../ansible/">Installer</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ansible_commands/">Commandes et playbook</a>
                   </li>
@@ -55,7 +53,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">RHEL</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
@@ -86,7 +84,9 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">umask</a>
+    <ul class="current">
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../priority/">Process priority</a>
                   </li>
@@ -137,8 +137,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>Ansible &raquo;</li>
-      <li>Installer</li>
+          <li>RHEL &raquo;</li>
+      <li>umask</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -147,38 +147,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="installer-ansible">Installer ansible</h1>
-<pre><code class="language-bash">pip index versions ansible
-pip install ansible==version
-</code></pre>
-<h1 id="configurer-ansible">Configurer ansible</h1>
-<pre><code class="language-bash">touch ansible.cfg
-vim ansible.cfg
-</code></pre>
-<p>Contenu de ansible.cfg:</p>
-<pre><code class="language-bash">{
-[defaults]
-inventory=./inventory
-}
-</code></pre>
-<pre><code class="language-bash">touch inventory
-vim inventory
-</code></pre>
-<p>Contenu de inventory:</p>
-<pre><code class="language-bash">{
-hostname ansible_host=0.0.0.0 ansible_user=user ansible_private_key_file=/path
-
-[group]
-hostname
-}
-</code></pre>
-<h1 id="installer-sshpass">Installer sshpass</h1>
-<p><code>dnf install sshpass</code></p>
+                <h1 id="umask">Umask</h1>
+<p><code>umask</code>: non permanent</p>
+<p>edit in /etc/bashrc for non-login shell</p>
+<p>edit in /etc/login.defs for login shell</p>
+<p>Add <code>umask xxx</code> to .bashrc in home directory of specific user</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../ansible_commands/" class="btn btn-neutral float-right" title="Commandes et playbook">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../hostname/" class="btn btn-neutral float-left" title="Hostname"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../priority/" class="btn btn-neutral float-right" title="Process priority">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -201,8 +180,10 @@ hostname
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
+      <span><a href="../hostname/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-      <span><a href="../ansible_commands/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+      <span><a href="../priority/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
