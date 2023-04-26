@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>umask - Notes</title>
+    <title>Kickstart - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "umask";
-        var mkdocs_page_input_path = "umask.md";
+        var mkdocs_page_name = "Kickstart";
+        var mkdocs_page_input_path = "kickstart.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -56,7 +56,17 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../kickstart/">Kickstart</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Kickstart</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#presentation">Présentation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#commandes">Commandes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exemple">Exemple</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installer">Installer</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
                   </li>
@@ -88,9 +98,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">umask</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../priority/">Process priority</a>
                   </li>
@@ -142,7 +150,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
           <li>RHEL &raquo;</li>
-      <li>umask</li>
+      <li>Kickstart</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -151,17 +159,133 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="umask">Umask</h1>
-<p><code>umask</code>: non permanent</p>
-<p>edit in /etc/bashrc for non-login shell</p>
-<p>edit in /etc/login.defs for login shell</p>
-<p>Add <code>umask xxx</code> to .bashrc in home directory of specific user</p>
+                <h1 id="kickstart">Kickstart</h1>
+<h2 id="presentation">Présentation</h2>
+<p>Un fichier kickstart démarre avec une liste de commandes.</p>
+<p>On peut rajouter des sections en utilisant <code>%...</code> et <code>%end</code>:</p>
+<ul>
+<li><code>%packages</code>: installer les packages en donnant leurs noms (rajouter - devant un package pour le retirer). @..... donne un groupe de packages, @^...... un environnement group</li>
+<li><code>%pre</code> &amp; <code>%post</code>: scripts à utiliser avant et après l'installation </li>
+</ul>
+<h2 id="commandes">Commandes</h2>
+<ul>
+<li><code>url --url="http://classroom.example.com/content/rhel9.0/x86_64/dvd/"</code>: url du média d'installation</li>
+<li><code>repo --name="appstream" --baseurl=http://classroom.example.com/content/rhel9.0/x86_64/dvd/AppStream/</code>: ajouter un repo</li>
+<li>text: installation en mode text</li>
+<li>vnc</li>
+<li><code>clearpart --all --drives=vda,vdb</code>: retire les partitions des disques</li>
+<li><code>part /home --fstype=ext4 --label=homes --size=4096 --maxsize=8192 --grow</code>: crée une partition</li>
+<li>autopart: partitionnement automatique</li>
+<li><code>ignoredisk --drives=sdc</code>: empeche anaconda de modifier les disques</li>
+<li><code>bootloader --location=mbr --boot-drive=sda</code>: où installer le bootloader. REQUIS  </li>
+<li>Créer LVM:</li>
+</ul>
+<pre><code>part pv.01 --size=8192
+volgroup myvg pv.01
+logvol / --vgname=myvg --fstype=xfs --size=2048 --name=rootvol --grow
+logvol /var --vgname=myvg --fstype=xfs --size=4096 --name=varvol
+</code></pre>
+<ul>
+<li><code>network --device=eth0 --bootproto=dhcp</code>: informations réseau</li>
+<li><code>firewall --enabled --service=ssh,http</code>: firewall</li>
+<li><code>lang en_US</code></li>
+<li><code>keyboard --vckeymap=us</code></li>
+<li><code>timezone --utc Europe/Amsterdam</code></li>
+<li><code>timesource --ntp-server classroom.example.com</code>  </li>
+<li><code>authselect</code>: voir authselect(8)</li>
+<li><code>rootpw --plaintext redhat</code></li>
+<li><code>selinux --enforcing</code></li>
+<li><code>services --disabled=network,iptables,ip6tables --enabled=NetworkManager,firewalld</code> </li>
+<li>Groupes et users:</li>
+</ul>
+<pre><code>group --name=admins --gid=10001
+user --name=jdoe --gecos=&quot;John Doe&quot; --groups=admins --password=changeme --plaintext
+</code></pre>
+<h2 id="exemple">Exemple</h2>
+<pre><code>#version=RHEL9
+
+# Define system bootloader options
+bootloader --append=&quot;console=ttyS0 console=ttyS0,115200n8 no_timer_check net.ifnames=0  crashkernel=auto&quot; --location=mbr --timeout=1 --boot-drive=vda
+
+# Clear and partition disks
+clearpart --all --initlabel
+ignoredisk --only-use=vda
+zerombr
+part / --fstype=&quot;xfs&quot; --ondisk=vda --size=10000
+
+# Define installation options
+text
+repo --name=&quot;appstream&quot; --baseurl=&quot;http://classroom.example.com/content/rhel9.0/x86_64/dvd/AppStream/&quot;
+url --url=&quot;http://classroom.example.com/content/rhel9.0/x86_64/dvd/&quot;
+
+# Configure keyboard and language settings
+keyboard --vckeymap=us
+lang en_US
+
+# Set a root password, authselect profile, and selinux policy
+rootpw --plaintext redhat
+authselect select sssd
+selinux --enforcing
+firstboot --disable
+
+# Enable and disable system services
+services --disabled=&quot;kdump,rhsmcertd&quot; --enabled=&quot;sshd,rngd,chronyd&quot;
+
+# Configure the system timezone and NTP server
+timezone America/New_York --utc
+timesource --ntp-server classroom.example.com
+</code></pre>
+<pre><code>%packages
+
+@core
+chrony
+cloud-init
+dracut-config-generic
+dracut-norescue
+firewalld
+grub2
+kernel
+rsync
+tar
+-plymouth
+
+%end
+</code></pre>
+<pre><code>%post
+
+echo &quot;This system was deployed using Kickstart on $(date)&quot; &gt; /etc/motd
+
+%end
+</code></pre>
+<pre><code>%post --interpreter=&quot;/usr/libexec/platform-python&quot;
+
+print(&quot;This this a line of text printed with python&quot;)
+
+%end
+</code></pre>
+<p>https://access.redhat.com/labs/kickstartconfig%60</p>
+<p>Utiliser ksvalidator pour tester le fichier kickstart</p>
+<h2 id="installer">Installer</h2>
+<p>Il faut rendre le fichier disponible:</p>
+<ul>
+<li>serveur réseau</li>
+<li>clé usb ou dvd</li>
+<li>disque dur local</li>
+</ul>
+<p>Dans l'installer de RHEL, il faut préciser dans les instructions en bas de l'écran la localisation:</p>
+<ul>
+<li>inst.ks=http://server/dir/file</li>
+<li>inst.ks=ftp://server/dir/file</li>
+<li>inst.ks=nfs:server:/dir/file</li>
+<li>inst.ks=hd:device:/dir/file</li>
+<li>inst.ks=cdrom:device</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../hostname/" class="btn btn-neutral float-left" title="Hostname"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../priority/" class="btn btn-neutral float-right" title="Process priority">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../commandes_rhel/" class="btn btn-neutral float-left" title="Commandes à connaitre"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../packet/" class="btn btn-neutral float-right" title="Gestion de packets">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -184,10 +308,10 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../hostname/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../commandes_rhel/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../priority/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../packet/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

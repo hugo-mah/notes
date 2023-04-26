@@ -56,9 +56,13 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../kickstart/">Kickstart</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../boot/">Boot process</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../firewall/">Firewall</a>
                   </li>
@@ -74,6 +78,20 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Container</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#commandes-podman">Commandes podman</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#variables-denvironnement">Variables d'environnement</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#analyse-de-logs">Analyse de logs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stockage-persistant">Stockage persistant</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#port-mapping">Port mapping</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reseau">Réseau</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#systemd">Systemd</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../selinux/">SELinux</a>
@@ -167,16 +185,10 @@ blocked = false
 <li><code>podman pull registry.access.redhat.com/ubi8/python-38</code></li>
 <li><code>podman images</code></li>
 </ol>
-<h1 id="creer-un-container">Créer un container</h1>
-<ol>
-<li><code>podman build -t python36:1.0 .</code></li>
-<li><code>podman create --name python36 &lt;id&gt;</code></li>
-<li><code>podman start python36</code></li>
-</ol>
 <h2 id="commandes-podman">Commandes podman</h2>
 <ul>
 <li><code>podman-build</code>: créer un container avec un fichier container</li>
-<li><code>podman-run</code>: lancer une commande dans un nouveau container</li>
+<li><code>podman-run -d --name name cmd</code>: lancer une commande dans un nouveau container détaché</li>
 <li><code>podman-images</code>: lister les images locales</li>
 <li><code>podman-ps</code>: afficher les infos d'un container</li>
 <li><code>podman-inspect</code>: affiche la configuration d'un container</li>
@@ -187,6 +199,25 @@ blocked = false
 <li><code>podman-rmi</code>: retirer une ou plusieurs images locales</li>
 <li><code>podman-search</code>: cherche une image</li>
 </ul>
+<p><code>skopeo inspect image</code> permet de donner des informatiions sur une image, et notamment "usage" qui donne un example de commandes</p>
+<h2 id="variables-denvironnement">Variables d'environnement</h2>
+<p>On peut spécifier des variables d'environnement qui peuvent être nécessaires à l'exécution du container</p>
+<h2 id="analyse-de-logs">Analyse de logs</h2>
+<p><code>podman container logs db01</code></p>
+<h2 id="stockage-persistant">Stockage persistant</h2>
+<p>Option -v </p>
+<p><code>-v /home/user/db_data:/var/lib/mysql:Z</code>: gérer le stockage permanent + :Z pour ajouter le contexte selinux</p>
+<h2 id="port-mapping">Port mapping</h2>
+<p>Option -p</p>
+<p><code>-p 13306:3306</code>
+<code>podman port -a</code></p>
+<h2 id="reseau">Réseau</h2>
+<p><code>podman network create</code></p>
+<h2 id="systemd">Systemd</h2>
+<p>create /home/"user"/.config/systemd/user</p>
+<p><code>podman generate systemd --name --new</code>
+<code>systemctl --user start service</code>
+<code>loginctl enable-linger</code>: pour démarrer le service au démarrage</p>
               
             </div>
           </div><footer>

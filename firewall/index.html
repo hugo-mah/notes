@@ -56,9 +56,13 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../kickstart/">Kickstart</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../packet/">Gestion de packets</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../repo/">Repository</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../boot/">Boot process</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Firewall</a>
     <ul class="current">
@@ -166,11 +170,28 @@
 </ul>
 <h2 id="commande">Commande</h2>
 <p><code>firewall-cmd</code></p>
+<ul>
+<li>--get-default-zone    Query the current default zone.</li>
+<li>--set-default-zone=ZONE   Set the default zone. This changes both the runtime and the permanent configuration.</li>
+<li>--get-zones   List all available zones.</li>
+<li>--get-active-zones    List all zones currently in use (have an interface or source tied to them), along with their interface and source information.</li>
+<li>--add-source=CIDR [--zone=ZONE]   Route all traffic coming from the IP address or network/netmask to the specified zone. If no --zone= option is provided, then the default zone is used.</li>
+<li>--remove-source=CIDR [--zone=ZONE]    Remove the rule routing all traffic from the zone coming from the IP address or network. If no --zone= option is provided, then the default zone is used.</li>
+<li>--add-interface=INTERFACE [--zone=ZONE]   Route all traffic coming from INTERFACE to the specified zone. If no --zone= option is provided, then the default zone is used.</li>
+<li>--change-interface=INTERFACE [--zone=ZONE]    Associate the interface with ZONE instead of its current zone. If no --zone= option is provided, then the default zone is used.</li>
+<li>--list-all [--zone=ZONE]  List all configured interfaces, sources, services, and ports for ZONE. If no --zone= option is provided, then the default zone is used.</li>
+<li>--list-all-zones  Retrieve all information for all zones (interfaces, sources, ports, services).</li>
+<li>--add-service=SERVICE [--zone=ZONE]   Allow traffic to SERVICE. If no --zone= option is provided, then the default zone is used.</li>
+<li>--add-port=PORT/PROTOCOL [--zone=ZONE]    Allow traffic to the PORT/PROTOCOL port(s). If no --zone= option is provided, then the default zone is used.</li>
+<li>--remove-service=SERVICE [--zone=ZONE]    Remove SERVICE from the allowed list for the zone. If no --zone= option is provided, then the default zone is used.</li>
+<li>--remove-port=PORT/PROTOCOL [--zone=ZONE] Remove the PORT/PROTOCOL port(s) from the allowed list for the zone. If no --zone= option is provided, then the default zone is used.</li>
+<li>--reload  Drop the runtime configuration and apply the persistent configuration.</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../repo/" class="btn btn-neutral float-left" title="Repository"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../boot/" class="btn btn-neutral float-left" title="Boot process"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../root_password/" class="btn btn-neutral float-right" title="Réinitialiser mot de passe root">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -194,7 +215,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../repo/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../boot/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../root_password/" style="color: #fcfcfc">Next &raquo;</a></span>
