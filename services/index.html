@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Hostname - Notes</title>
+    <title>Services - Notes</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Hostname";
-        var mkdocs_page_input_path = "hostname.md";
+        var mkdocs_page_name = "Services";
+        var mkdocs_page_input_path = "services.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -53,7 +53,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">LINUX</span></p>
-              <ul class="current">
+              <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../commandes_rhel/">Commandes à connaitre</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../kickstart/">Kickstart</a>
@@ -88,9 +88,7 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ssh/">SSH</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Hostname</a>
-    <ul class="current">
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../hostname/">Hostname</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../umask/">umask</a>
                   </li>
@@ -130,8 +128,10 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Azure</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../services/">Services</a>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Services</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
       </div>
@@ -148,8 +148,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
-          <li>LINUX &raquo;</li>
-      <li>Hostname</li>
+          <li>Azure &raquo;</li>
+      <li>Services</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -158,14 +158,63 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="hostname">Hostname</h1>
-<p><code>hostnamectl</code></p>
+                <h1 id="azure-services">Azure Services</h1>
+<p>Le cloud est basé sur un principe de partage de responsabilités</p>
+<p>Il existe 3 types de services:</p>
+<ul>
+<li>SaaS: Software as a Service</li>
+<li>PaaS: Platform as a Service</li>
+<li>IaaS: Infrastructure as a Service</li>
+</ul>
+<p>Le SaaS est celui où le client a le moins de responsabilité; le IaaS où il en a le plus</p>
+<p>4 types de cloud: </p>
+<ul>
+<li>Private: cloud utilisé par une seule entité</li>
+<li>Public: cloud provider utilisable par tout le monde</li>
+<li>Hybrid</li>
+<li>multi-cloud</li>
+</ul>
+<p>Les services peuvent être managés en GUI ou CLI</p>
+<h1 id="cli">CLI</h1>
+<p>Installable sous Windows, Linux ou MacOS, ou directement sur Azure Cloud Shell. Possibilité d'utiliser Azure Az Powershell.</p>
+<p>az command:
+- az vm create</p>
+<h1 id="azure-arm-template">Azure ARM template</h1>
+<p>Fichier texte en JSON pour déployer des ressources sur le cloud (infra as code)</p>
+<h1 id="managements-groups">Managements groups</h1>
+<p>Permet d'organiser les subscriptions pour facilier l'application de polices Azure par exemple</p>
+<h1 id="policy-and-lock">Policy and lock</h1>
+<p>Les policy peuvent etre appliquées à un management group, a un resource group, à une subscriptions. Pareil pour les locks, mais ils prennent le dessus. Il y en a deux: read-only et delete</p>
+<h1 id="storage-account">Storage account</h1>
+<p>Contient:
+- blobs: fichier classique
+- file shares: dossier partagé avec SMB
+- queues: 
+- tables: nosql</p>
+<p>Principe de versioning, soft delete.</p>
+<p>Accès fréquent et rapide (hot), moins fréquent (cool) et archive. Peut etre défini de maniére globale ou pour un blob</p>
+<p>Pour accéder à un storage account, on peut se connecter, mais surtout utiliser l'une des deux clés pour avoir accès aux données dans le compte, ou un SAS qui donne accès à une partie des ressources sélectionnées.</p>
+<h1 id="mots-cles">Mots-clés</h1>
+<ul>
+<li>Azure AD: active directory</li>
+<li>Private: cloud utilisé par une seule entité</li>
+<li>Public: cloud provider utilisable par tout le monde</li>
+<li>Hybrid</li>
+<li>multi-cloud</li>
+<li>SaaS: Software as a Service</li>
+<li>PaaS: Platform as a Service</li>
+<li>IaaS: Infrastructure as a Service</li>
+<li>Azure Arc</li>
+<li>Azre CLI</li>
+<li>Azure Az Powershell module</li>
+<li>Azure ARM</li>
+<li>Subscriptions: abonnement Azure(1 subscriptions par AD mais un AD peut avoir plusieurs subscriptions)</li>
+</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../ssh/" class="btn btn-neutral float-left" title="SSH"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../umask/" class="btn btn-neutral float-right" title="umask">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../git_commands/" class="btn btn-neutral float-left" title="Commandes git"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -188,10 +237,8 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../ssh/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../git_commands/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../umask/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
